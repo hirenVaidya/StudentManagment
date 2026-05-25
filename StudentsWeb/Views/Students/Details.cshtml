@@ -1,0 +1,29 @@
+@model StudentViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">@Model.Name</h1>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+    </div>
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Phone</dt>
+    <dd class="col-sm-9">@Model.Phone</dd>
+
+    <dt class="col-sm-3">Created by</dt>
+    <dd class="col-sm-9">@Model.CreatedByName</dd>
+
+    <dt class="col-sm-3">Created</dt>
+    <dd class="col-sm-9">@Model.CreatedAt.ToLocalTime().ToString("g")</dd>
+
+    <dt class="col-sm-3">Updated</dt>
+    <dd class="col-sm-9">@Model.UpdatedAt.ToLocalTime().ToString("g")</dd>
+</dl>
