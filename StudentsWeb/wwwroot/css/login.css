@@ -1,0 +1,298 @@
+
+.auth-shell {
+    --navy: #0e1729;
+    --navy-2: #17223b;
+    --indigo: #4f46e5;
+    --indigo-dark: #4338ca;
+    --indigo-soft: #eef0ff;
+    --ink: #101828;
+    --muted: #667085;
+    --line: #d9dde8;
+    --danger: #c0262d;
+    --danger-soft: #fdecec;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem 4rem;
+}
+
+.auth-card {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    width: 100%;
+    max-width: 880px;
+    min-height: 500px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 24px 48px -20px rgba(14, 23, 41, .28);
+}
+
+/* ---------- Left panel ---------- */
+
+.auth-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2.25rem;
+    color: #fff;
+    background: radial-gradient(120% 80% at 0% 0%, rgba(79, 70, 229, .45), transparent 60%), var(--navy);
+}
+
+.register {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    max-width: 260px;
+}
+
+    .register .cell {
+        aspect-ratio: 1;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, .07);
+        border: 1px solid rgba(255, 255, 255, .08);
+    }
+
+        .register .cell.present {
+            background: var(--indigo);
+            border-color: transparent;
+        }
+
+        .register .cell.absent {
+            background: transparent;
+            border: 1.5px dashed rgba(255, 255, 255, .35);
+        }
+
+.aside-title {
+    margin: 0 0 .6rem;
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+}
+
+.aside-text {
+    margin: 0;
+    max-width: 30ch;
+    font-size: .92rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, .68);
+}
+
+/* ---------- Right panel ---------- */
+
+.auth-main {
+    padding: 2.75rem 2.75rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-title {
+    margin: 0 0 .35rem;
+    font-size: 1.85rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: var(--ink);
+}
+
+.auth-sub {
+    margin: 0 0 1.75rem;
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+.auth-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    margin-bottom: 1.25rem;
+    padding: .75rem .9rem;
+    border-radius: 10px;
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-size: .9rem;
+    line-height: 1.4;
+}
+
+    .auth-alert svg {
+        flex: none;
+        margin-top: 1px;
+    }
+
+/* ---------- Fields ---------- */
+
+.field {
+    margin-bottom: 1.15rem;
+}
+
+.field-label {
+    display: block;
+    margin-bottom: .4rem;
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.field-control {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #98a2b3;
+    pointer-events: none;
+    transition: color .15s;
+}
+
+.field-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 44px 0 42px;
+    font: inherit;
+    font-size: .95rem;
+    color: var(--ink);
+    background: #f9fafc;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: border-color .15s, box-shadow .15s, background-color .15s;
+}
+
+    .field-input::placeholder {
+        color: #a3aab8;
+    }
+
+    .field-input:hover {
+        border-color: #bfc5d4;
+    }
+
+    .field-input:focus {
+        outline: none;
+        background: #fff;
+        border-color: var(--indigo);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, .16);
+    }
+
+.field-control:focus-within .field-icon {
+    color: var(--indigo);
+}
+
+.field-input.input-validation-error {
+    border-color: var(--danger);
+    background: #fffafa;
+}
+
+.field-error {
+    display: block;
+    margin-top: .35rem;
+    font-size: .82rem;
+    color: var(--danger);
+}
+
+    .field-error:empty {
+        display: none;
+    }
+
+/* Password toggle */
+
+.field-toggle {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    color: #7b8497;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+    .field-toggle:hover {
+        background: var(--indigo-soft);
+        color: var(--indigo);
+    }
+
+    .field-toggle:focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 1px;
+    }
+
+    .field-toggle .eye-closed {
+        display: none;
+    }
+
+    .field-toggle.is-on .eye-open {
+        display: none;
+    }
+
+    .field-toggle.is-on .eye-closed {
+        display: block;
+    }
+
+/* ---------- Submit ---------- */
+
+.auth-submit {
+    width: 100%;
+    height: 48px;
+    margin-top: .5rem;
+    font: inherit;
+    font-size: .98rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--indigo);
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 8px 16px -8px rgba(79, 70, 229, .7);
+    transition: background-color .15s, transform .1s, box-shadow .15s;
+}
+
+    .auth-submit:hover {
+        background: var(--indigo-dark);
+    }
+
+    .auth-submit:active {
+        transform: translateY(1px);
+        box-shadow: 0 4px 10px -6px rgba(79, 70, 229, .7);
+    }
+
+    .auth-submit:focus-visible {
+        outline: 3px solid rgba(79, 70, 229, .4);
+        outline-offset: 2px;
+    }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 767.98px) {
+    .auth-shell {
+        padding: 1.25rem .75rem 2.5rem;
+    }
+
+    .auth-card {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .auth-aside {
+        display: none;
+    }
+
+    .auth-main {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-shell * {
+        transition: none !important;
+    }
+}
