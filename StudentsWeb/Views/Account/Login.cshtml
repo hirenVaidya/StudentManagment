@@ -2,39 +2,86 @@
 @{
     ViewData["Title"] = "Sign in";
 }
-@* comment *@
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <h1 class="h3 mb-4">Sign in</h1>
 
-        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-        {
-            <div class="alert alert-danger" role="alert">@Model.ErrorMessage</div>
-        }
+<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 
-        <form asp-action="Login" method="post">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+<div class="auth-shell">
+    <div class="auth-card">
 
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label"></label>
-                <input asp-for="Email" class="form-control" autocomplete="username" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+        @* Left panel: roll-call register motif *@
+        <aside class="auth-aside" aria-hidden="true">
+            <div class="register">
+                @for (var i = 0; i < 42; i++)
+                {
+                    <span class="cell @(((i * 5) % 11 < 7) ? "present" : "") @(i % 13 == 4 ? "absent" : "")"></span>
+                }
             </div>
-
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label"></label>
-                <input asp-for="Password" class="form-control" autocomplete="current-password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="aside-copy">
+                <p class="aside-title">Every student, every record, in one place.</p>
+                <p class="aside-text">Track enrolment, attendance and results without chasing spreadsheets.</p>
             </div>
+        </aside>
 
-            <button type="submit" class="btn btn-primary w-100">Sign in</button>
-        </form>
+        @* Right panel: form *@
+        <section class="auth-main">
+            <h1 class="auth-title">Sign in</h1>
+            <p class="auth-sub">Use your school account to continue.</p>
 
-        
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="auth-alert" role="alert">
+                    <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M10 1.8a8.2 8.2 0 1 0 0 16.4A8.2 8.2 0 0 0 10 1.8Zm-.9 4.4h1.8v5H9.1v-5Zm.9 8.4a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z" /></svg>
+                    <span>@Model.ErrorMessage</span>
+                </div>
+            }
+
+            <form asp-action="Login" method="post" novalidate>
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="field">
+                    <label asp-for="Email" class="field-label"></label>
+                    <div class="field-control">
+                        <svg class="field-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="m4 7.5 8 6 8-6" /></svg>
+                        <input asp-for="Email" class="field-input" autocomplete="username" placeholder="name@school.edu" autofocus />
+                    </div>
+                    <span asp-validation-for="Email" class="field-error"></span>
+                </div>
+
+                <div class="field">
+                    <label asp-for="Password" class="field-label"></label>
+                    <div class="field-control">
+                        <svg class="field-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="3" /><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" /></svg>
+                        <input asp-for="Password" class="field-input" autocomplete="current-password" placeholder="Enter your password" />
+                        <button type="button" class="field-toggle" id="togglePassword" aria-label="Show password" aria-pressed="false">
+                            <svg class="eye-open" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /></svg>
+                            <svg class="eye-closed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18" /><path d="M10.6 5.1A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4" /><path d="M6.6 6.6A17 17 0 0 0 2 12s3.6 7 10 7a10 10 0 0 0 4.4-1" /><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" /></svg>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="field-error"></span>
+                </div>
+
+                <button type="submit" class="auth-submit">Sign in</button>
+            </form>
+        </section>
+
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var btn = document.getElementById('togglePassword');
+            var input = document.getElementById('Password');
+            if (!btn || !input) return;
+            btn.addEventListener('click', function () {
+                var show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                btn.classList.toggle('is-on', show);
+                btn.setAttribute('aria-pressed', show);
+                btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            });
+        })();
+    </script>
 }
